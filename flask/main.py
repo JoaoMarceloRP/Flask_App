@@ -8,6 +8,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://joao:@localhost/crm'
 
 db = SQLAlchemy(app)
 
+#Classes
 class Cliente(db.Model):
     cliente_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nome = db.Column(db.String(255), nullable=False)
