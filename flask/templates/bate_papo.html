@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Bate-Papo</h1>
+
+    <div id="mensagens">
+        <ul>
+            {% for mensagem in mensagens %}
+                <li>{{ mensagem.data_hora }} - Usuario {{ mensagem.usuario_id }}: {{ mensagem.mensagem }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <form method="post" action="/bate_papo">
+        <input type="text" name="usuario_id" placeholder="ID do usuário" required><br>
+        <textarea name="nova_mensagem" placeholder="Digite uma mensagem..." required></textarea>
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+</html>

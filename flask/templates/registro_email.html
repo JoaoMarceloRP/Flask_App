@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registros de Email</title>
+</head>
+<body>
+    <h1>Registros de E-mail</h1>
+
+    <div id="registros_email">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente ID</th>
+                    <th>Data e Hora</th>
+                    <th>Assunto</th>
+                    <th>Corpo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for registro in registros_email %}
+                    <tr>
+                        <td>{{ registro.registro_email_id }}</td>
+                        <td>{{ registro.cliente_id }}</td>
+                        <td>{{ registro.data_hora }}</td>
+                        <td>{{ registro.assunto }}</td>
+                        <td>{{ registro.corpo }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <h2>Adicionar Registro de E-mail</h2>
+    <form method="post" action="/registros_email">
+        <label for="cliente_id">Cliente ID:</label>
+        <input type="text" name="cliente_id" id="cliente_id" required><br>
+
+        <label for="data_hora">Data e Hora:</label>
+        <input type="text" name="data_hora" id="data_hora" required><br>
+
+        <label for="assunto">Assunto:</label>
+        <input type="text" name="assunto" id="assunto" required><br>
+
+        <label for="corpo">Corpo:</label>
+        <textarea name="corpo" id="corpo" required></textarea>
+
+        <input type="submit" value="Adicionar Registro de E-mail">
+    </form>
+</body>
+</html>

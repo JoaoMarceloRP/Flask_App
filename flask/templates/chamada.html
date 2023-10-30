@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Chamadas</title>
+</head>
+<body>
+    <h1>Chamadas</h1>
+
+    <div id="chamadas">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente ID</th>
+                    <th>Funcionário ID</th>
+                    <th>Motivo ID</th>
+                    <th>Data e Hora</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for chamada in chamadas %}
+                    <tr>
+                        <td>{{ chamada.chamada_id }}</td>
+                        <td>{{ chamada.cliente_id }}</td>
+                        <td>{{ chamada.funcionario_id }}</td>
+                        <td>{{ chamada.motivo_id }}</td>
+                        <td>{{ chamada.data_hora }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <h2>Adicionar Chamada</h2>
+    <form method="post" action="/chamadas">
+        <label for="cliente_id">Cliente ID:</label>
+        <input type="text" name="cliente_id" id="cliente_id" required><br>
+
+        <label for="funcionario_id">Funcionário ID:</label>
+        <input type="text" name="funcionario_id" id="funcionario_id" required><br>
+
+        <label for="motivo_id">Motivo ID:</label>
+        <input type="text" name="motivo_id" id="motivo_id" required><br>
+
+        <label for="data_hora">Data e Hora: YYYY-MM-DD hh:mm:ss</label>
+        <input type="text" name="data_hora" id="data_hora" required><br>
+
+        <input type="submit" value="Adicionar Chamada">
+    </form>
+</body>
+</html>

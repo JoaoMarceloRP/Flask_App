@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Setores</title>
+</head>
+<body>
+    <h1>Setores</h1>
+
+    <div id="setores">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for setor in setores %}
+                    <tr>
+                        <td>{{ setor.setor_id }}</td>
+                        <td>{{ setor.nome }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <h2>Adicionar Setor</h2>
+    <form method="post" action="/setores">
+        <label for="nome">Nome:</label>
+        <input type="text" name="nome" id="nome" required><br>
+
+        <input type="submit" value="Adicionar Setor">
+    </form>
+</body>
+</html>

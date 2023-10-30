@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Funcionários</title>
+</head>
+<body>
+    <h1>Funcionários</h1>
+
+    <div id="funcionarios">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Setor ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for funcionario in funcionarios %}
+                    <tr>
+                        <td>{{ funcionario.funcionario_id }}</td>
+                        <td>{{ funcionario.nome }}</td>
+                        <td>{{ funcionario.setor_id }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <h2>Adicionar Funcionário</h2>
+    <form method="post" action="/funcionarios">
+        <label for="nome">Nome:</label>
+        <input type="text" name="nome" id="nome" required><br>
+
+        <label for="setor_id">Setor ID:</label>
+        <input type="text" name="setor_id" id="setor_id"><br>
+
+        <input type="submit" value="Adicionar Funcionário">
+    </form>
+</body>
+</html>

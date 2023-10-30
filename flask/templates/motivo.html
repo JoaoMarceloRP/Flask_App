@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bate-papo</title>
+</head>
+<body>
+    <h1>Motivos</h1>
+
+    <div id="motivos">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Descrição</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for motivo in motivos %}
+                    <tr>
+                        <td>{{ motivo.motivo_id }}</td>
+                        <td>{{ motivo.descricao }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <h2>Adicionar Motivo</h2>
+    <form method="post" action="/motivos">
+        <label for="descricao">Descrição:</label>
+        <input type="text" name="descricao" id="descricao" required><br>
+
+        <input type="submit" value="Adicionar Motivo">
+    </form>
+</body>
+</html>
