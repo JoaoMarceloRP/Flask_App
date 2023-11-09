@@ -17,7 +17,8 @@ CREATE TABLE bate_papo (
     bate_papo_id INT AUTO_INCREMENT PRIMARY KEY,
     usuario_id INT,
     mensagem TEXT,
-    data_hora DATETIME
+    data_hora DATETIME,
+    FOREIGN KEY (usuario_id) REFERENCES usuario(usuario_id)
 );
 
 -- Tabela de Setor
@@ -30,7 +31,8 @@ CREATE TABLE setor (
 CREATE TABLE funcionario (
     funcionario_id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
-    setor_id INT
+    setor_id INT,
+    FOREIGN KEY (setor_id) REFERENCES setor(setor_id)
 );
 
 -- Tabela de Cliente
@@ -52,7 +54,10 @@ CREATE TABLE chamada (
     cliente_id INT,
     funcionario_id INT,
     motivo_id INT,
-    data_hora DATETIME
+    data_hora DATETIME,
+    FOREIGN KEY (cliente_id) REFERENCES cliente(cliente_id),
+    FOREIGN KEY (funcionario_id) REFERENCES funcionario(funcionario_id),
+    FOREIGN KEY (motivo_id) REFERENCES motivo(motivo_id)
 );
 
 -- Tabela de Registro de Email
@@ -61,5 +66,6 @@ CREATE TABLE registro_email (
     cliente_id INT,
     data_hora DATETIME,
     assunto VARCHAR(255) NOT NULL,
-    corpo TEXT
+    corpo TEXT,
+    FOREIGN KEY (cliente_id) REFERENCES cliente(cliente_id)
 );
