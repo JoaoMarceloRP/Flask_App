@@ -103,6 +103,11 @@ def bate_papo():
         usuario_id = request.form['usuario_id']
         nova_mensagem = request.form['nova_mensagem']
         
+        usuario_existente = Usuario.query.filter_by(usuario_id=usuario_id).first()
+
+        if not usuario_existente:
+            return "Erro: Usuário com ID especificado não existe."
+
         if usuario_id and nova_mensagem:
             mensagem = BatePapo(usuario_id=usuario_id, mensagem=nova_mensagem)
             db.session.add(mensagem)

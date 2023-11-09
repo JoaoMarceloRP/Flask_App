@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="PT-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,10 +16,21 @@
         </ul>
     </div>
 
+    <div id="mensagem-erro" style="display: none; color: red;">
+        erro
+    </div>
+
     <form method="post" action="/bate_papo">
         <input type="text" name="usuario_id" placeholder="ID do usuário" required><br>
         <textarea name="nova_mensagem" placeholder="Digite uma mensagem..." required></textarea>
         <button type="submit">Enviar</button>
+        <button type="button" onclick="voltarParaInicio()">Voltar para a Página Inicial</button>
     </form>
+
+    <script>
+        function voltarParaInicio() {
+            window.location.href = "{{ url_for('index') }}";
+        }
+    </script>
 </body>
 </html>
