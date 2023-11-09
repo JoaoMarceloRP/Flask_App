@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="PT-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +14,7 @@
                 <th>ID</th>
                 <th>Nome</th>
                 <th>Email</th>
+                <th>Ação</th>
             </tr>
         </thead>
         <tbody>
@@ -22,23 +23,25 @@
                     <td>{{ cliente.cliente_id }}</td>
                     <td>{{ cliente.nome }}</td>
                     <td>{{ cliente.email }}</td>
+                    <td><button href="{{ url_for('edt_cliente', cliente_id=cliente.cliente_id) }}">Editar</button></td>
+                    <td>
+                        <form method="post" action="{{ url_for('del_cliente', cliente_id=cliente.cliente_id) }}">
+                            <button type="submit">Excluir</button>
+                        </form>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 
     <h2>Adicionar Cliente</h2>
-    <form method="post" action="/clientes"><br>
-
-        <label for="cliente_id">ID:</label>
-        <input type="text" name="cliente_id" id="cliente_id" required><br>
-
+    <form method="post" action="/add_clientes">
         <label for="nome">Nome:</label>
         <input type="text" name="nome" id="nome" required><br>
-
+    
         <label for="email">Email:</label>
         <input type="email" name="email" id="email" required><br>
-
+    
         <input type="submit" value="Adicionar Cliente">
     </form>
 </body>

@@ -83,10 +83,9 @@ class Setor(db.Model):
 def index():
     return render_template('index.html')
 
-@app.route('/clientes', methods=['GET', 'POST'])
+@app.route('/add_clientes', methods=['GET', 'POST'])
 def clientes():
     if request.method == 'POST':
-        cliente_id = request.form['cliente_id']
         nome = request.form['nome']
         email = request.form['email']
         
@@ -96,6 +95,28 @@ def clientes():
         
     clientes = Cliente.query.all()
     return render_template('cliente.html', clientes=clientes)
+
+@app.route('/del_cliente/<int:cliente_id>', methods=['GET', 'POST'])
+def del_cliente(cliente_id):
+    cliente = Cliente.query.get(cliente_id)
+    if cliente:
+        db.session.delete(cliente)
+        db.session.commit()
+        return redirect(url_for('clientes'))
+    else:
+        return "Cliente não encontrado."
+
+@app.route('/clientes/editar/<int:cliente_id>', methods=['GET', 'POST'])
+def edt_cliente(cliente_id):
+    cliente = Cliente.query.get_or_404(cliente_id)
+
+    if request.method == 'POST':
+        cliente.nome = request.form['nome']
+        cliente.email = request.form['email']
+        db.session.commit()
+        return redirect(url_for('clientes'))
+
+    return render_template('cliente_edt.html', cliente=cliente)
 
 @app.route('/bate_papo', methods=['GET', 'POST'])
 def bate_papo():
