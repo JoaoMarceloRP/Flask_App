@@ -23,7 +23,7 @@
                     <td>{{ cliente.cliente_id }}</td>
                     <td>{{ cliente.nome }}</td>
                     <td>{{ cliente.email }}</td>
-                    <td><button href="{{ url_for('edt_cliente', cliente_id=cliente.cliente_id) }}">Editar</button></td>
+                    <td><a href="{{ url_for('edt_cliente', cliente_id=cliente.cliente_id) }}">Editar</a></td>
                     <td>
                         <form method="post" action="{{ url_for('del_cliente', cliente_id=cliente.cliente_id) }}">
                             <button type="submit">Excluir</button>
