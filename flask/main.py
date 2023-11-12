@@ -280,5 +280,33 @@ def setores():
     setores = Setor.query.all()
     return render_template('setor.html', setores=setores)
 
+@app.route('/setores/excluir/<int:setor_id>', methods=['POST'])
+def excluir_setor(setor_id):
+    setor = Setor.query.get_or_404(setor_id)
+    funcionarios_associados = Funcionario.query.filter_by(setor_id=setor.setor_id).all()
+
+    if funcionarios_associados:
+        for funcionario in funcionarios_associados:
+            db.session.delete(funcionario)
+
+    db.session.delete(setor)
+    db.session.commit()
+
+    return redirect(url_for('setores'))
+
+@app.route('/setores/editar/<int:setor_id>', methods=['GET', 'POST'])
+def editar_setor(setor_id):
+    setor = Setor.query.get_or_404(setor_id)
+
+    if request.method == 'POST':
+        novo_nome = request.form['novo_nome']
+
+        if novo_nome:
+            setor.nome = novo_nome
+            db.session.commit()
+            return redirect(url_for('setores'))
+
+    return render_template('setor_edt.html', setor=setor)    
+
 if __name__ == '__main__':
     app.run(debug=True)

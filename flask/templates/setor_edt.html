@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Setor</title>
+</head>
+<body>
+    <h1>Editar Setor</h1>
+
+    <form method="post" action="{{ url_for('editar_setor', setor_id=setor.setor_id) }}">
+        <label for="novo_nome">Novo Nome:</label>
+        <input type="text" name="novo_nome" id="novo_nome" value="{{ setor.nome }}" required><br>
+
+        <input type="submit" value="Salvar">
+    </form>
+
+    <a href="{{ url_for('setores') }}">Voltar para a Página Principal</a>
+</body>
+</html>

@@ -15,6 +15,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Nome</th>
+                    <th>Ação</th>
                 </tr>
             </thead>
             <tbody>
@@ -22,11 +23,18 @@
                     <tr>
                         <td>{{ setor.setor_id }}</td>
                         <td>{{ setor.nome }}</td>
+                        <td>
+                            <a href="{{ url_for('editar_setor', setor_id=setor.setor_id) }}">Editar</a>
+                            <form method="post" action="{{ url_for('excluir_setor', setor_id=setor.setor_id) }}">
+                                <button type="submit">Excluir Setor (e Funcionários)</button>
+                            </form>
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
+    
 
     <h2>Adicionar Setor</h2>
     <form method="post" action="/setores">
@@ -34,6 +42,7 @@
         <input type="text" name="nome" id="nome" required><br>
 
         <input type="submit" value="Adicionar Setor">
+        <a href="{{ url_for('index') }}">Voltar para a Página Principal</a>
     </form>
 </body>
 </html>
