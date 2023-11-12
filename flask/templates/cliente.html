@@ -35,7 +35,7 @@
     </table>
 
     <h2>Adicionar Cliente</h2>
-    <form method="post" action="/add_clientes">
+    <form method="post" action="/clientes">
         <label for="nome">Nome:</label>
         <input type="text" name="nome" id="nome" required><br>
     
@@ -43,6 +43,7 @@
         <input type="email" name="email" id="email" required><br>
     
         <input type="submit" value="Adicionar Cliente">
+        <a href="{{ url_for('index') }}">Voltar para a Página Principal</a>
     </form>
 </body>
 </html>

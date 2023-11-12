@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Funcionário</title>
+</head>
+<body>
+    <h1>Editar Funcionário</h1>
+
+    <form method="post" action="{{ url_for('edt_funcionario', funcionario_id=funcionario.funcionario_id) }}">
+        <label for="nome">Nome:</label>
+        <input type="text" name="nome" id="nome" value="{{ funcionario.nome }}" required><br>
+
+        <label for="setor_id">ID do Setor:</label>
+        <input type="text" name="setor_id" id="setor_id" value="{{ funcionario.setor_id }}" required><br>
+
+        <input type="submit" value="Salvar">
+        <a href="{{ url_for('funcionarios') }}">Voltar para a Página Principal</a>
+    </form>
+</body>
+</html>

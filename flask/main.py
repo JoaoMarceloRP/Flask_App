@@ -39,7 +39,7 @@ class Funcionario(db.Model):
 
     def __init__(self, nome, setor_id):
         self.nome = nome
-        self.setor_id = setor_id      
+        self.setor_id = setor_id 
 
 class Motivo(db.Model):
     motivo_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -83,7 +83,7 @@ class Setor(db.Model):
 def index():
     return render_template('index.html')
 
-@app.route('/add_clientes', methods=['GET', 'POST'])
+@app.route('/clientes', methods=['GET', 'POST'])
 def clientes():
     if request.method == 'POST':
         nome = request.form['nome']
@@ -158,14 +158,49 @@ def funcionarios():
     if request.method == 'POST':
         nome = request.form['nome']
         setor_id = request.form['setor_id']
-        
+
+        setor_existente = Setor.query.filter_by(setor_id=setor_id).first()
+
+        if not setor_existente:
+            return "Erro: Setor com ID especificado não existe."
+
         if nome:
             funcionario = Funcionario(nome, setor_id)
             db.session.add(funcionario)
             db.session.commit()
-    
+
     funcionarios = Funcionario.query.all()
-    return render_template('funcionario.html', funcionarios=funcionarios)
+    return render_template('funcionario.html', funcionarios=funcionarios, setores=Setor.query.all())
+
+@app.route('/del_funcionario/<int:funcionario_id>', methods=['GET', 'POST'])
+def del_funcionario(funcionario_id):
+    funcionario = Funcionario.query.get(funcionario_id)
+    if funcionario:
+        db.session.delete(funcionario)
+        db.session.commit()
+        return redirect(url_for('funcionarios'))
+    else:
+        return "Funcionario não encontrado."
+    
+@app.route('/funcionarios/editar/<int:funcionario_id>', methods=['GET', 'POST'])
+def edt_funcionario(funcionario_id):
+    funcionario = Funcionario.query.get_or_404(funcionario_id)
+
+    if request.method == 'POST':
+        funcionario.nome = request.form['nome']
+        setor_id = request.form['setor_id']
+
+        setor_existente = Setor.query.filter_by(setor_id=setor_id).first()
+        if not setor_existente:
+            return "Erro: Setor com ID especificado não existe."
+
+        funcionario.setor_id = setor_id
+        db.session.commit()
+        return redirect(url_for('funcionarios'))
+
+    return render_template('funcionario_edt.html', funcionario=funcionario)
+
+
 
 @app.route('/motivos', methods=['GET', 'POST'])
 def motivos():

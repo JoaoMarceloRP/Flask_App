@@ -16,6 +16,7 @@
                     <th>ID</th>
                     <th>Nome</th>
                     <th>Setor ID</th>
+                    <th>Ação</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,6 +25,13 @@
                         <td>{{ funcionario.funcionario_id }}</td>
                         <td>{{ funcionario.nome }}</td>
                         <td>{{ funcionario.setor_id }}</td>
+                        <td><a href="{{ url_for('edt_funcionario', funcionario_id=funcionario.funcionario_id) }}">Editar</a></td>
+                        
+                        <td>
+                            <form method="post" action="{{ url_for('del_funcionario', funcionario_id=funcionario.funcionario_id) }}">
+                                <button type="submit">Excluir</button>
+                            </form>
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>
@@ -39,6 +47,7 @@
         <input type="text" name="setor_id" id="setor_id"><br>
 
         <input type="submit" value="Adicionar Funcionário">
+        <a href="{{ url_for('index') }}">Voltar para a Página Principal</a>
     </form>
 </body>
 </html>
