@@ -35,20 +35,30 @@
     </div>
 
     <h2>Adicionar Registro de E-mail</h2>
-    <form method="post" action="/registros_email">
-        <label for="cliente_id">Cliente ID:</label>
-        <input type="text" name="cliente_id" id="cliente_id" required><br>
+<form method="post" action="/registros_email">
+    <label for="cliente_id">Cliente ID:</label>
+    <input type="text" name="cliente_id" id="cliente_id" required><br>
 
-        <label for="data_hora">Data e Hora:</label>
-        <input type="text" name="data_hora" id="data_hora" required><br>
+    <label for="assunto">Assunto:</label>
+    <input type="text" name="assunto" id="assunto" required><br>
 
-        <label for="assunto">Assunto:</label>
-        <input type="text" name="assunto" id="assunto" required><br>
+    <label for="corpo">Corpo:</label>
+    <textarea name="corpo" id="corpo"></textarea><br>
 
-        <label for="corpo">Corpo:</label>
-        <textarea name="corpo" id="corpo" required></textarea>
+    <label for="data">Data:</label>
+    <input type="date" name="data" id="data" required><br>
 
-        <input type="submit" value="Adicionar Registro de E-mail">
-    </form>
+    <label for="hora">Hora:</label>
+    <input type="time" name="hora" id="hora" required><br>
+
+    <input type="submit" value="Adicionar Registro de E-mail">
+    <button type="button" onclick="voltarParaInicio()">Voltar para a Página Inicial</button>
+
+    <script>
+        function voltarParaInicio() {
+            window.location.href = "{{ url_for('index') }}";
+        }
+    </script>
+</form>
 </body>
 </html>

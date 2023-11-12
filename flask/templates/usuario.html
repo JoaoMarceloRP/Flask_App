@@ -49,8 +49,14 @@
         <input type="password" name="senha" id="senha" required><br>
 
         <input type="submit" value="Adicionar Usuário">
-        <a href="{{ url_for('index') }}">Voltar para a Página Principal</a>
+        <button type="button" onclick="voltarParaInicio()">Voltar para a Página Inicial</button>
     </form>
+
+    <script>
+        function voltarParaInicio() {
+            window.location.href = "{{ url_for('index') }}";
+        }
+    </script>
 
 </body>
 </html>

@@ -42,7 +42,12 @@
         <input type="text" name="nome" id="nome" required><br>
 
         <input type="submit" value="Adicionar Setor">
-        <a href="{{ url_for('index') }}">Voltar para a Página Principal</a>
+        <button type="button" onclick="voltarParaInicio()">Voltar para a Página Inicial</button>
     </form>
-</body>
+
+    <script>
+        function voltarParaInicio() {
+            window.location.href = "{{ url_for('index') }}";
+        }
+    </script>
 </html>

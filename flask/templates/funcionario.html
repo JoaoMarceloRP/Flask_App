@@ -46,7 +46,13 @@
         <input type="text" name="setor_id" id="setor_id"><br>
 
         <input type="submit" value="Adicionar Funcionário">
-        <a href="{{ url_for('index') }}">Voltar para a Página Principal</a>
+        <button type="button" onclick="voltarParaInicio()">Voltar para a Página Inicial</button>
     </form>
+
+    <script>
+        function voltarParaInicio() {
+            window.location.href = "{{ url_for('index') }}";
+        }
+    </script>
 </body>
 </html>

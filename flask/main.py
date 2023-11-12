@@ -9,15 +9,20 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://joao:@localhost/crm'
 db = SQLAlchemy(app)
 
 class Cliente(db.Model):
-    cliente_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    cliente_id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), nullable=False)
 
+    registros_email = db.relationship('RegistroEmail', back_populates='cliente')
+
+
 class BatePapo(db.Model):
     bate_papo_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    usuario_id = db.Column(db.Integer, nullable=False)
+    usuario_id = db.Column(db.Integer, db.ForeignKey('usuario.usuario_id'), nullable=False)
     mensagem = db.Column(db.Text, nullable=False)
     data_hora = db.Column(db.DateTime, nullable=False)
+    
+    usuario = db.relationship('Usuario', backref=db.backref('mensagens', lazy=True))
 
 class Chamada(db.Model):
     chamada_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -49,17 +54,13 @@ class Motivo(db.Model):
         self.descricao = descricao          
 
 class RegistroEmail(db.Model):
-    registro_email_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    cliente_id = db.Column(db.Integer, nullable=False)
+    registro_email_id = db.Column(db.Integer, primary_key=True)
+    cliente_id = db.Column(db.Integer, db.ForeignKey('cliente.cliente_id'))
     data_hora = db.Column(db.DateTime, nullable=False)
     assunto = db.Column(db.String(255), nullable=False)
     corpo = db.Column(db.Text)
 
-    def __init__(self, cliente_id, data_hora, assunto, corpo):
-        self.cliente_id = cliente_id
-        self.data_hora = data_hora
-        self.assunto = assunto
-        self.corpo = corpo
+    cliente = db.relationship('Cliente', back_populates='registros_email', primaryjoin='Cliente.cliente_id == RegistroEmail.cliente_id')
 
 class Usuario(db.Model):
     usuario_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -92,7 +93,7 @@ def clientes():
         novo_cliente = Cliente(nome=nome, email=email)
         db.session.add(novo_cliente)
         db.session.commit()
-        
+    
     clientes = Cliente.query.all()
     return render_template('cliente.html', clientes=clientes)
 
@@ -123,19 +124,37 @@ def bate_papo():
     if request.method == 'POST':
         usuario_id = request.form['usuario_id']
         nova_mensagem = request.form['nova_mensagem']
-        
+        data = request.form['data']
+        hora = request.form['hora']
+
         usuario_existente = Usuario.query.filter_by(usuario_id=usuario_id).first()
 
         if not usuario_existente:
             return "Erro: Usuário com ID especificado não existe."
 
-        if usuario_id and nova_mensagem:
-            mensagem = BatePapo(usuario_id=usuario_id, mensagem=nova_mensagem)
+        if usuario_id and nova_mensagem and data and hora:
+            data_hora_str = f"{data} {hora}"
+            data_hora = datetime.strptime(data_hora_str, '%Y-%m-%d %H:%M')
+            mensagem = BatePapo(usuario_id=usuario_id, mensagem=nova_mensagem, data_hora=data_hora)
             db.session.add(mensagem)
             db.session.commit()
 
     mensagens = BatePapo.query.all()
     return render_template('bate_papo.html', mensagens=mensagens)
+'''
+@app.route('/batepapos/excluir/<int:batepapo_id>', methods=['POST'])
+def excluir_batepapo(batepapo_id):
+    batepapo = BatePapo.query.get_or_404(batepapo_id)
+    
+    usuario_id_relacionado = batepapo.usuario_id
+
+    try:
+        db.session.delete(batepapo)
+        db.session.commit()
+    except Exception as e:
+        return f"Erro ao excluir a mensagem: {str(e)}"
+
+    return redirect(url_for('bate_papo'))'''
 
 @app.route('/chamadas', methods=['GET', 'POST'])
 def chamadas():
@@ -217,15 +236,19 @@ def motivos():
 def registros_email():
     if request.method == 'POST':
         cliente_id = request.form['cliente_id']
-        data_hora = request.form['data_hora']
         assunto = request.form['assunto']
         corpo = request.form['corpo']
-        
-        if cliente_id and data_hora and assunto and corpo:
-            registro_email = RegistroEmail(cliente_id, data_hora, assunto, corpo)
+        data = request.form['data']
+        hora = request.form['hora']
+
+        if cliente_id and assunto and data and hora:
+            data_hora_str = f"{data} {hora}"
+            data_hora = datetime.strptime(data_hora_str, '%Y-%m-%d %H:%M')
+
+            registro_email = RegistroEmail(cliente_id=cliente_id, assunto=assunto, corpo=corpo, data_hora=data_hora)
             db.session.add(registro_email)
             db.session.commit()
-    
+
     registros_email = RegistroEmail.query.all()
     return render_template('registro_email.html', registros_email=registros_email)
 

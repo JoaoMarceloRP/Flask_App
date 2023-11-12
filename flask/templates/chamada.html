@@ -49,6 +49,14 @@
         <input type="text" name="data_hora" id="data_hora" required><br>
 
         <input type="submit" value="Adicionar Chamada">
+        <button type="button" onclick="voltarParaInicio()">Voltar para a Página Inicial</button>
+    </form>
+
+    <script>
+        function voltarParaInicio() {
+            window.location.href = "{{ url_for('index') }}";
+        }
+    </script>
     </form>
 </body>
 </html>

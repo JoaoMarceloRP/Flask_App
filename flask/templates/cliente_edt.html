@@ -16,7 +16,13 @@
         <input type="email" name="email" id="email" value="{{ cliente.email }}" required><br>
 
         <input type="submit" value="Salvar Alterações">
-        <a href="{{ url_for('clientes') }}">Voltar para a Página Principal</a>
+        <button type="button" onclick="voltarParaFCliente()">Voltar para o Formulário</button>
     </form>
+
+    <script>
+        function voltarParaFCliente() {
+            window.location.href = "{{ url_for('clientes') }}";
+        }
+    </script>
 </body>
 </html>
