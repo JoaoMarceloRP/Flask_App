@@ -16,6 +16,7 @@
                     <th>ID</th>
                     <th>Nome</th>
                     <th>E-mail</th>
+                    <th>Acão</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,6 +25,11 @@
                         <td>{{ usuario.usuario_id }}</td>
                         <td>{{ usuario.nome }}</td>
                         <td>{{ usuario.email }}</td>
+                        <td>
+                            <form method="post" action="{{ url_for('del_usuario', usuario_id=usuario.usuario_id) }}">
+                                <button type="submit">Excluir</button>
+                            </form>
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>

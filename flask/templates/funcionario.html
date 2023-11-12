@@ -26,7 +26,6 @@
                         <td>{{ funcionario.nome }}</td>
                         <td>{{ funcionario.setor_id }}</td>
                         <td><a href="{{ url_for('edt_funcionario', funcionario_id=funcionario.funcionario_id) }}">Editar</a></td>
-                        
                         <td>
                             <form method="post" action="{{ url_for('del_funcionario', funcionario_id=funcionario.funcionario_id) }}">
                                 <button type="submit">Excluir</button>

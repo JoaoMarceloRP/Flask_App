@@ -200,8 +200,6 @@ def edt_funcionario(funcionario_id):
 
     return render_template('funcionario_edt.html', funcionario=funcionario)
 
-
-
 @app.route('/motivos', methods=['GET', 'POST'])
 def motivos():
     if request.method == 'POST':
@@ -245,6 +243,16 @@ def usuarios():
     
     usuarios = Usuario.query.all()
     return render_template('usuario.html', usuarios=usuarios)
+
+@app.route('/del_usuario/<int:usuario_id>', methods=['GET', 'POST'])
+def del_usuario(usuario_id):
+    usuario_id = Usuario.query.get(usuario_id)
+    if usuario_id:
+        db.session.delete(usuario_id)
+        db.session.commit()
+        return redirect(url_for('usuarios'))
+    else:
+        return "Usuario não encontrado."
 
 @app.route('/setores', methods=['GET', 'POST'])
 def setores():
