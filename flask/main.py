@@ -253,6 +253,19 @@ def del_usuario(usuario_id):
         return redirect(url_for('usuarios'))
     else:
         return "Usuario não encontrado."
+    
+@app.route('/usuario/editar/<int:usuario_id>', methods=['GET', 'POST'])
+def edt_usuario(usuario_id):
+    usuario = Usuario.query.get_or_404(usuario_id)
+
+    if request.method == 'POST':
+        usuario.nome = request.form['nome']
+        usuario.email = request.form['email']
+        usuario.senha = request.form['senha']
+        db.session.commit()
+        return redirect(url_for('usuarios'))
+
+    return render_template('usuario_edt.html', usuario=usuario) 
 
 @app.route('/setores', methods=['GET', 'POST'])
 def setores():

@@ -1,0 +1,25 @@
+<!DOCTYPE html>io
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Usuário</title>
+</head>
+<body>
+    <h1>Editar Usuário</h1>
+
+    <form method="post" action="{{ url_for('edt_usuario', usuario_id=usuario.usuario_id) }}">
+        <label for="nome">Nome:</label>
+        <input type="text" name="nome" id="nome" value="{{ usuario.nome }}" required><br>
+
+        <label for="email">Email :</label>
+        <input type="text" name="email" id="email" value="{{ usuario.email }}" required><br>
+
+        <label for="senha">Senha :</label>
+        <input type="password" name="senha" id="senha" value="{{ usuario.senha }}" required><br>
+
+        <input type="submit" value="Salvar">
+        <a href="{{ url_for('usuarios') }}">Voltar para a Página Principal</a>
+    </form>
+</body>
+</html>

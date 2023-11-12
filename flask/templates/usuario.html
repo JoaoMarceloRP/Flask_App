@@ -16,7 +16,7 @@
                     <th>ID</th>
                     <th>Nome</th>
                     <th>E-mail</th>
-                    <th>Acão</th>
+                    <th>Ação</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,6 +25,7 @@
                         <td>{{ usuario.usuario_id }}</td>
                         <td>{{ usuario.nome }}</td>
                         <td>{{ usuario.email }}</td>
+                        <td><a href="{{ url_for('edt_usuario', usuario_id=usuario.usuario_id) }}">Editar</a></td>
                         <td>
                             <form method="post" action="{{ url_for('del_usuario', usuario_id=usuario.usuario_id) }}">
                                 <button type="submit">Excluir</button>
@@ -49,5 +50,6 @@
 
         <input type="submit" value="Adicionar Usuário">
     </form>
+
 </body>
 </html>
