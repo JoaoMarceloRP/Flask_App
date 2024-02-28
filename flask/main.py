@@ -99,13 +99,16 @@ def clientes():
 
 @app.route('/del_cliente/<int:cliente_id>', methods=['GET', 'POST'])
 def del_cliente(cliente_id):
-    cliente = Cliente.query.get(cliente_id)
-    if cliente:
-        db.session.delete(cliente)
-        db.session.commit()
-        return redirect(url_for('clientes'))
-    else:
-        return "Cliente não encontrado."
+    cliente = Cliente.query.get_or_404(cliente_id)
+
+    registros_email_associados = cliente.registros_email
+    for registro_email in registros_email_associados:
+        db.session.delete(registro_email)
+
+    db.session.delete(cliente)
+    db.session.commit()
+
+    return redirect(url_for('clientes'))
 
 @app.route('/clientes/editar/<int:cliente_id>', methods=['GET', 'POST'])
 def edt_cliente(cliente_id):
